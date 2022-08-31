@@ -2,15 +2,38 @@ import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, StyleSheet, Text, View, Pressable, TextInput, SafeAreaView  } from 'react-native';
 import { Input} from '@rneui/base';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons'; 
+//import { deleteDoc, doc, getDoc, setDoc } from 'firebase/compat/firestore';
 import React, { useLayoutEffect } from 'react';
-
-
+// import firestore from '@react-native-firebase/firestore'; 
 const StartScreen = ({ navigation }) => {
+
   useLayoutEffect(()=>{
     navigation.setOptions({
       title: false,
     })
   },[navigation])
+  const Create = () => {
+    // MARK: Creating New Doc in Firebase
+    // Before that enable Firebase in Firebase Console
+    // const myDoc = doc(db, "MyCollection", "MyDocument")
+
+    // // Your Document Goes Here
+    // const docData = {
+    //   "name": "iJustine",
+    //   "bio": "YouTuber"
+    // }
+
+    // setDoc(myDoc, docData)
+    //   // Handling Promises
+    //   .then(() => {
+    //     // MARK: Success
+    //     alert("Document Created!")
+    //   })
+    //   .catch((error) => {
+    //     // MARK: Failure
+    //     alert(error.message)
+    //   })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,7 +47,7 @@ const StartScreen = ({ navigation }) => {
       <Text style={{color:"black", letterSpacing:2, margin:10}}>Login to your account</Text>
       <TextInput style={styles.input} type="email" placeholder='Type your e-mail' placeholderTextColor="#aaa" textAlign={'center'} />
       <TextInput style={styles.input} type="password" placeholder='Password' placeholderTextColor="#aaa" textAlign={'center'} />
-      <TouchableOpacity style={styles.button.login}>    
+      <TouchableOpacity style={styles.button.login} onPress={Create}>    
         <Text style={styles.text}>Login</Text>
       </TouchableOpacity> 
       <Text style={{margin:10, letterSpacing:1, fontSize:10}}>OR, If you don't have account</Text>

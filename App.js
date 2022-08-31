@@ -8,17 +8,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator()
 
 const globalScreensOptions = {
-
+  headerStyle: {backgroundColor:'#fff'}
 }
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={globalScreensOptions}>
-       <Stack.Screen name="Start" component={StartScreen}/>
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={globalScreensOptions} >
+       <Stack.Screen name="Start" component={StartScreen} />
        <Stack.Screen name="Register" component={RegisterScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-

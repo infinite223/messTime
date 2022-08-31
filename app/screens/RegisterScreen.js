@@ -1,17 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, StyleSheet, Text, View, Pressable, TextInput, SafeAreaView  } from 'react-native';
-import { Input} from '@rneui/base';
+import { Button, Input} from '@rneui/base';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons'; 
-import React, { useLayoutEffect } from 'react';
-
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { getAuth, createUserWithEmailAndPassword, FirebaseAuth, connectAuthEmulator } from 'firebase/auth';
+import { app } from '../firebase';
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterScreen = ({ navigation }) => {
-
+    const [ nickname, setNickname ] = useState("")
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const auth = getAuth(app)
+   //FirebaseAuth.getInstance().useEmulator("10.0.2.", 9099);
+  // connectAuthEmulator(auth, `http://127.0.0.1:9099}`);
     useLayoutEffect(()=>{
         navigation.setOptions({
           title: "Register",
         });
     },[navigation])
+
+    useEffect(()=>{
+      console.log(email)
+    },[email])
+
+     const register = async () => {
+       createUserWithEmailAndPassword(auth, 'jane.doe@example.com', 'SuperSecretPassword!').then((a)=>console.log(a)).catch((e)=>console.log(e))
+      // Auth()
+      //  .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
+      // .then(() => {
+      //   console.log('User account created & signed in!');
+      // })
+      // .catch(error => {
+      //   if (error.code === 'auth/email-already-in-use') {
+      //     console.log('That email address is already in use!');
+      //   }
+    
+      //   if (error.code === 'auth/invalid-email') {
+      //     console.log('That email address is invalid!');
+      //   }
+    
+      //   console.error(error);
+      // });
+  
+     }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,12 +55,14 @@ const RegisterScreen = ({ navigation }) => {
         </View>
       </View>
       <Text style={{color:"black", letterSpacing:2, margin:10}}>Register your account</Text>
-      <TextInput style={styles.input} type="email" placeholder='Type your e-mail' placeholderTextColor="#aaa" textAlign={'center'} />
-      <TextInput style={styles.input} type="password" placeholder='Password' placeholderTextColor="#aaa" textAlign={'center'} />
-      <TextInput style={styles.input} type="password" placeholder='repeat password' placeholderTextColor="#aaa" textAlign={'center'} />
-      <TouchableOpacity style={styles.button.login}>    
+      <TextInput style={styles.input} value={nickname} type="text" onChangeText={(text)=>setNickname(text)} placeholder='Type your nickname' placeholderTextColor="#aaa" textAlign={'center'} />
+        <TextInput style={styles.input} value={email} type="email" onChangeText={(text)=>setEmail(text)} placeholder='Type your e-mail' placeholderTextColor="#aaa" textAlign={'center'} />
+        <TextInput style={styles.input} value={password} secureTextEntry type="password" onChangeText={(text)=>setPassword(text)} placeholder='Password' placeholderTextColor="#aaa" textAlign={'center'} />
+      <TextInput style={styles.input} value={password} secureTextEntry type="password" onChangeText={(text)=>setPassword(text)} placeholder='repeat password' placeholderTextColor="#aaa" textAlign={'center'} />
+      <TouchableOpacity style={styles.button.login} onPress={register}>    
         <Text style={styles.text}>Register</Text>
       </TouchableOpacity> 
+   
       <StatusBar style="auto" />
     </SafeAreaView>
   );
